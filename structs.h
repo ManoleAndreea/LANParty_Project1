@@ -3,20 +3,21 @@
 #include <stdlib.h>
 
 ////////////////////////////////////////////////
-struct player
+struct players
 {
     char *name, *surname;
     int points;
-    struct player *next, *prev;
+    struct players *next, *prev;
 };
-typedef struct player player;
+typedef struct players player;
 ////////////////////////////////////////////////
-struct team
+struct teams
 {
     char *name;
-    int number_players, points;
+    int number_players;
+    float points;
     player *  jucator;
-    struct team *next, *prev;
+    struct teams *next, *prev;
 };
-typedef struct team team;
+typedef struct teams team;
 ////////////////////////////////////////////////

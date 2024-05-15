@@ -79,17 +79,50 @@ int scanf_teams(FILE *d_file, team **head_team, player *head_player)
             *(team_name+i)=*(team_name+1+i);
         
         add_beginning_teams(head_team, number_players, team_name);
-        
+
         for(int i=0; i<number_players; i++)
         {
             fscanf(d_file, "%s%s%d", name, surname, &points);
             (*head_team)->points+=points;
             add_beginning_players(*head_team, &head_player, name, surname, points);
         }
+        (*head_team)->points/=(float)number_players;
+
         contor++;
 
     }
     return number_teams;
 
+}
+
+void eliminate_team(team *exterminate, team **head_team)
+{
+    if(exterminate->prev==NULL)
+    {
+        (*head_team)=(*head_team)->next;
+        (*head_team)->prev=NULL;
+        free(exterminate);
+    }
+    else if(exterminate->next==NULL)
+    {
+        exterminate->prev->next=NULL;
+        free(exterminate);
+    }
+    else
+    {
+        exterminate->prev->next=exterminate->next;
+        exterminate->next->prev=exterminate->prev;
+        free(exterminate);
+    }
+}
+
+team* search_for_team(team *head_team, int number)
+{
+    while(head_team!=NULL)
+    {
+        if(head_team->points==number)
+            return head_team;
+        head_team=head_team->next;
+    }
 }
 
