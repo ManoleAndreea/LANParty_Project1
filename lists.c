@@ -75,6 +75,8 @@ int scanf_teams(FILE *d_file, team **head_team, player *head_player)
     
         fgets(team_name, 50, d_file);      
         *(team_name+(strlen(team_name)-2))='\0'; ///aici sterg spatiul si \n
+        // if(*(team_name+strlen(team_name-1))==' ')
+        //     *(team_name+strlen(team_name-1))=*(team_name+strlen(team_name));
         for(int i=0; i<strlen(team_name); i++)   ///aici sterg spatiul dintre numarul de jucatori si numele echipei
             *(team_name+i)=*(team_name+1+i);
         

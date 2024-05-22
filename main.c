@@ -8,31 +8,56 @@ void task1(team *team_head, FILE *r_file)
         printf_team_names(team_head, r_file);
 }
 
-void task2(team **team_head, FILE *r_file, int number_of_teams)
+int task2(team **team_head, FILE *r_file, int number_of_teams)
 {
-    int power=find_power_of2(number_of_teams);
-    while(number_of_teams>power)
+    if((number_of_teams&(number_of_teams-1))!=0)
     {
-        float minimum=find_minimum(*team_head);
-        team *auxiliar=*team_head;
-        int verif=1;
-        while(auxiliar!=NULL && verif)
+
+    
+        int power=find_power_of2(number_of_teams);
+        while(number_of_teams>power)
         {
-            if(auxiliar->points==minimum)
-                verif=0, eliminate_team(auxiliar, team_head);
-            auxiliar=auxiliar->next;
+            float minimum=find_minimum(*team_head);
+            team *auxiliar=*team_head;
+            int verif=1;
+            while(auxiliar!=NULL && verif)
+            {
+                if(auxiliar->points==minimum)
+                    verif=0, eliminate_team(auxiliar, team_head);
+                auxiliar=auxiliar->next;
+            }
+            number_of_teams--;
         }
-        number_of_teams--;
     }
-    printf_team_names(*team_head, r_file);
+   printf_team_names(*team_head, r_file);
+   return number_of_teams;
 }
 
-void task3(queue *tail, match *fight, team *team_head, FILE *r_file, stack *top_winners, stack*top_losers)
+void task3(queue *tail, match *fight, team *team_head, FILE *r_file, stack *top_winners, stack*top_losers, int number_teams)
 {
     equip_cheue(tail, fight);
     int contor=1;
-    printf_fights(tail, r_file);
- 
+    int number_fights=number_teams/2;
+   while(number_teams>2)
+   {
+        fprintf(r_file, "\n--- ROUND NO:%d\n", contor);
+        printf_fights(tail, r_file, &top_winners, &top_losers);
+        fprintf(r_file, "\n\nWINNERS OF ROUND NO:%d\n", contor);
+        printf_winners(top_winners, r_file);
+        contor++;
+        team *head=re_create_teams(top_winners);
+        match *fight=create_matches(head, number_teams);
+        equip_cheue(tail, fight);
+        delete_stack(&top_losers);
+        delete_stack(&top_winners);
+        number_fights/=2;
+        number_teams/=2;;
+   }
+           fprintf(r_file, "\n--- ROUND NO:%d\n", contor);
+        printf_fights(tail, r_file, &top_winners, &top_losers);
+        fprintf(r_file, "\n\nWINNERS OF ROUND NO:%d\n", contor);
+        printf_winners(top_winners, r_file);
+
 
 }
 
@@ -55,9 +80,9 @@ int main(int argc, char* argv[])
         stack *stack_winners=NULL, *stack_losers=NULL;
         if(*(cerinta+4)=='1')
        {
-            task2(&team_head, r_file, number_of_teams);
-            match *fight=create_matches(team_head);
-            task3(tail, fight, team_head, r_file, stack_winners, stack_losers);
+            number_of_teams=task2(&team_head, r_file, number_of_teams);
+            match *fight=create_matches(team_head, number_of_teams);
+            task3(tail, fight, team_head, r_file, stack_winners, stack_losers, number_of_teams);
        }
             
         else if(*(cerinta+2)=='1')
