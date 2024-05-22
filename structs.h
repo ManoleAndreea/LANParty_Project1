@@ -41,4 +41,11 @@ struct stack
 };
 typedef struct stack stack;
 //////////////////////////////////////////////////
+struct tree
+{
+    team *teams;
+    struct tree *left, *right;
+};
+typedef struct tree tree;
+//////////////////////////////////////////////////
 

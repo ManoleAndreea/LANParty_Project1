@@ -85,3 +85,29 @@ void delete_fights(match *fight)
         free(auxiliar);
     }
 }
+
+team *add_best8(team *head)
+{
+    team *auxiliar=(team*)malloc(sizeof(team));
+    auxiliar->prev=NULL;
+    auxiliar->next=NULL;
+    auxiliar->points=head->points;
+    auxiliar->name=(char*)malloc(sizeof(char)*50);
+    strcpy(auxiliar->name, head->name);
+    team *best=auxiliar;
+    head=head->next;
+    while(head!=NULL)
+    {
+        team *auxiliar=(team*)malloc(sizeof(team));
+        auxiliar->prev=NULL;
+        auxiliar->next=best;
+        auxiliar->points=head->points;
+        auxiliar->name=(char*)malloc(sizeof(char)*50);
+        strcpy(auxiliar->name, head->name);
+        best=auxiliar;
+        head=head->next;
+
+    }
+
+    return best;
+}

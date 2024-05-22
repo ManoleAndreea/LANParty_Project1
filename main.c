@@ -1,5 +1,5 @@
 //#include "lists.h"
-#include "stack&queque.h"
+#include "tree.h"
 //#include "structs.h"
 #include <stdlib.h>
 
@@ -33,8 +33,9 @@ int task2(team **team_head, FILE *r_file, int number_of_teams)
    return number_of_teams;
 }
 
-void task3(queue *tail, match *fight, team *team_head, FILE *r_file, stack *top_winners, stack*top_losers, int number_teams)
+team* task3(queue *tail, match *fight, team *team_head, FILE *r_file, stack *top_winners, stack*top_losers, int number_teams)
 {
+    team *best8=NULL;
     equip_cheue(tail, fight);
     int contor=1;
     int number_fights=number_teams/2;
@@ -46,6 +47,9 @@ void task3(queue *tail, match *fight, team *team_head, FILE *r_file, stack *top_
         printf_winners(top_winners, r_file);
         contor++;
         team *head=re_create_teams(top_winners);
+        if(number_teams==16)
+            best8=add_best8(head);
+        
         match *fight=create_matches(head, number_teams);
         equip_cheue(tail, fight);
         delete_stack(&top_losers);
@@ -57,8 +61,19 @@ void task3(queue *tail, match *fight, team *team_head, FILE *r_file, stack *top_
         printf_fights(tail, r_file, &top_winners, &top_losers);
         fprintf(r_file, "\n\nWINNERS OF ROUND NO:%d\n", contor);
         printf_winners(top_winners, r_file);
+    return best8;
 
+}
 
+void task4(tree *root, team *team8, FILE *r_file)
+{
+    while(team8!=NULL)
+    {
+        root=insert_in_tree(root, team8);
+        team8=team8->next;
+    }
+    fprintf(r_file, "\nTOP 8 TEAMS:\n");
+    printf_drs(root, r_file);
 }
 
 int main(int argc, char* argv[])
@@ -70,15 +85,24 @@ int main(int argc, char* argv[])
 
         team *team_head=NULL;
         player *player_head=NULL;
-        char *cerinta;
-        cerinta=(char*)malloc(sizeof(char)*11);
+        char *cerinta=(char*)malloc(sizeof(char)*11);
         fgets(cerinta, 10, c_file);
 
         int number_of_teams=scanf_teams(d_file, &team_head, player_head);
 
         queue *tail=create_cheue();
         stack *stack_winners=NULL, *stack_losers=NULL;
-        if(*(cerinta+4)=='1')
+
+        tree *root=NULL;
+
+        if(*(cerinta+6)=='1')
+        {
+            number_of_teams=task2(&team_head, r_file, number_of_teams);
+            match *fight=create_matches(team_head, number_of_teams);
+            team *team8=task3(tail, fight, team_head, r_file, stack_winners, stack_losers, number_of_teams);
+            task4(root, team8, r_file);
+        }
+        else if(*(cerinta+4)=='1')
        {
             number_of_teams=task2(&team_head, r_file, number_of_teams);
             match *fight=create_matches(team_head, number_of_teams);
