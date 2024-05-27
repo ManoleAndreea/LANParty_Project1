@@ -24,3 +24,5 @@ Cerinte:
     4) Se va realiza un clasament al ultimelor 8 echipe (salvate la subpunctul anterior) sub forma unui BST(Binary Search Tree). Acesta va fi ordonat după punctajul pe echipă și i se va afișa conținutul în ordine descrescătoare(in cazul in care doua echipe au acelasi punctaj se vor ordona in functie de nume, descrescator).
     5) Se va realiza un arbore de tip AVL cu ultimele 8 echipe (salvate la subpunctul 3, dar sortate ca la subpunctul 4) si se vor afisa echipele de pe nivelul 2 al arborelui.
 
+Ce am facut la cod?
+    Habar n am :). am un if care verifica fiecare cerinta in  parte si apeleaza in functie de cerintele pe care trebuie sa le rezolvi functii specifice pentru cerinta respectiva. am mai multe headere care descriu mai multe fisiere .c in care am scris functii specifice unei anumite structuri pentru a le gasi mai usor cand este nevoie, un header doar pentru structuri siii, bineinteles, un makefile pe care il foloseam si ca sa verific un test anume.
