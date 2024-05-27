@@ -48,8 +48,6 @@ match* create_matches(team *head_team, int number_teams)
     match *auxiliar=(match*)malloc(sizeof(match));
     auxiliar->next=fight;
     fight=auxiliar;
-    // free(auxiliar);
-        
     fight->team2=end_of_teams;
     fight->team1=end_of_teams->prev;
     return fight;
@@ -60,13 +58,12 @@ match* create_matches(team *head_team, int number_teams)
         team* end_of_teams=head_team;
         while(end_of_teams->next!=NULL)
             end_of_teams=end_of_teams->next;
-    match *fight=NULL;
-    fight=(match*)malloc(sizeof(match));
-    fight->next=NULL;
-    fight->team2=end_of_teams;
-    fight->team1=end_of_teams->prev;
+        match *fight=NULL;
+        fight=(match*)malloc(sizeof(match));
+        fight->next=NULL;
+        fight->team2=end_of_teams;
+        fight->team1=end_of_teams->prev;
         return fight;
-        
     }
 
     // else if(number_teams==4)
@@ -110,4 +107,10 @@ team *add_best8(team *head)
     }
 
     return best;
+}
+int maxx(int a, int b)
+{
+    if(a>b)
+        return a;
+    return b;
 }

@@ -48,4 +48,11 @@ struct tree
 };
 typedef struct tree tree;
 //////////////////////////////////////////////////
+struct avl_tree
+{
+    int height;
+    team *teams;
+    struct avl_tree *left, *right;
+};
+typedef struct avl_tree avl_tree;
 

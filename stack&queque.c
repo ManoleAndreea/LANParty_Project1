@@ -33,7 +33,6 @@ void de_cheue(queue **tail)
    (*tail)->front=(*tail)->front->next;
     if((*tail)->front==NULL)
         (*tail)->rear=NULL;
-   // else
         exterminate=NULL;
     free(exterminate);
 }
@@ -47,7 +46,6 @@ void equip_cheue(queue *tail, match *fight)
         en_cheue(tail, fight);
         free(fight);
         fight=auxiliar;
-
     }
 }
 
@@ -88,19 +86,19 @@ void printf_fights(queue *tail, FILE* r_file, stack **top_winners, stack **top_l
     {
         char *name=(char*)malloc(sizeof(char)*50);
         strcpy(name, tail->front->team1->name);
-        if(*(name+strlen(name)-1)==' ')
+        if(*(name+strlen(name)-1)==' ')///aici verific daca ultimul element inainte de NULL e space si il suprascriu cu NULL daca e
         {
             *(name+strlen(name)-1)=*(name+strlen(name));
             strcpy(tail->front->team1->name, name);
      
         }
         strcpy(name, tail->front->team2->name);
-        if(*(name+strlen(name)-1)==' ')
+        if(*(name+strlen(name)-1)==' ')///si aici la fel ca mai sus dar pentru a doua echipa
         {
             *(name+strlen(name)-1)=*(name+strlen(name));
             strcpy(tail->front->team2->name, name);
         }
-        fprintf(r_file, "%s", tail->front->team1->name);
+        fprintf(r_file, "%s", tail->front->team1->name);///aici afisez
         int contor=33-strlen(tail->front->team1->name);
         while(contor)
             fprintf(r_file, " "), contor--;
@@ -109,8 +107,8 @@ void printf_fights(queue *tail, FILE* r_file, stack **top_winners, stack **top_l
         while(contor)
             fprintf(r_file, " "), contor--;
         fprintf(r_file, "%s\n", tail->front->team2->name);
-        who_the_stronger_team(tail, top_winners, top_losers);
-        de_cheue(&tail);
+        who_the_stronger_team(tail, top_winners, top_losers);///aici vedem cine a castigaaat si actualizam stack urile
+        de_cheue(&tail);///aici dam undeva meciul respectiv 
     }
     fprintf(r_file, "%s", tail->front->team1->name);
     int contor=33-strlen(tail->front->team1->name);
